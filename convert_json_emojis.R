@@ -1,5 +1,6 @@
-#setwd("C:/Users/Evan/Documents")
+setwd("C:/Users/Evan/Documents")
 library(jsonlite)
+library(stringr)
 emojis <- fromJSON("emojis_dictionary_2017/emojis.json", flatten=TRUE)
 
 for(i in 1:length(emojis$codepoint)){
@@ -97,11 +98,24 @@ all_emojis <- rbind(
 	cbind(emojis$name, emojis$"modification.skin.type-5.presentation.default"),
 	cbind(emojis$name, emojis$"modification.skin.type-6.presentation.default")
 )
+
+emojis$codepoint
+emojis$presentation.default
+emojis$"modification.skin.type-1-2.presentation.default"
+emojis$"modification.skin.type-3.presentation.default"
+emojis$"modification.skin.type-4.presentation.default"
+emojis$"modification.skin.type-5.presentation.default"
+emojis$"modification.skin.type-6.presentation.default"
+
 all_emojis <- as.data.frame(all_emojis, stringsAsFactors = FALSE)
 colnames(all_emojis) <- c("emoji_name","emoji_code")
 w <- which(is.na(all_emojis$emoji_code) == TRUE)
 all_emojis <- all_emojis[-w,]
 
-# 16716 emojis!
+w <- which(duplicated(all_emojis) == TRUE)
+all_emojis <- all_emojis[-w,]
+dim(all_emojis)
+
+# 2430 emojis!
 
 
